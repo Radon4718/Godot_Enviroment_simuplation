@@ -1,0 +1,88 @@
+[gd_scene load_steps=7 format=3 uid="uid://b70mofvecd8oj"]
+
+[ext_resource type="Texture2D" uid="uid://dde8cji8fbbof" path="res://Assets/Bubbles/Coloured/32x32/bubble_6.png" id="1_eh0f6"]
+
+[sub_resource type="GDScript" id="GDScript_xw1xk"]
+resource_name = "swayRandom"
+script/source = "extends Node2D
+
+var pos = position
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	
+	pos.x += randf_range(-1,1)
+	pos.y += randf_range(-0.5,0.5)
+	
+	pass
+"
+
+[sub_resource type="Curve" id="Curve_83kjb"]
+_data = [Vector2(0.101124, 0.285714), 0.0, 0.0, 0, 0, Vector2(0.449438, 0.747253), 0.0, 0.0, 0, 0, Vector2(0.769663, 0.582418), 0.0, 0.0, 0, 0, Vector2(0.960674, 0.153846), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_3dcbq"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.162921, -114.725), 0.0, 0.0, 0, 0, Vector2(0.47191, 178.022), 0.0, 0.0, 0, 0, Vector2(0.870786, 209.67), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Curve" id="Curve_aao3c"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.202247, -106.813), 0.0, 0.0, 0, 0, Vector2(0.382022, 90.989), 0.0, 0.0, 0, 0, Vector2(0.696629, -217.582), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Curve" id="Curve_558fu"]
+_data = [Vector2(0.0842697, 0.142857), 0.0, 0.0, 0, 0, Vector2(0.314607, 0.384615), 0.902789, 0.902789, 0, 0, Vector2(0.623596, 0.461538), 0.0, 0.0, 0, 0, Vector2(0.825843, 0.494505), 0.0, 0.0, 0, 0, Vector2(0.955056, 0.197802), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[node name="Bubble system" type="Node2D"]
+scale = Vector2(5, 5)
+script = SubResource("GDScript_xw1xk")
+
+[node name="Bigger" type="CPUParticles2D" parent="."]
+position = Vector2(-1, 0)
+amount = 3
+lifetime = 2.0
+speed_scale = 0.5
+explosiveness = 0.25
+randomness = 0.75
+lifetime_randomness = 1.0
+fixed_fps = 20
+texture = ExtResource("1_eh0f6")
+direction = Vector2(0, 1)
+spread = 32.27
+gravity = Vector2(0, -50)
+scale_amount_min = 0.3
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_83kjb")
+color = Color(0.0235294, 0.552941, 1, 1)
+
+[node name="smaller1" type="CPUParticles2D" parent="."]
+rotation = 1.26885
+amount = 3
+speed_scale = 0.25
+explosiveness = 0.75
+randomness = 0.75
+lifetime_randomness = 1.0
+fixed_fps = 20
+texture = ExtResource("1_eh0f6")
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector2(0.5, 0.5)
+spread = 113.89
+gravity = Vector2(0, -100)
+angular_velocity_curve = SubResource("Curve_3dcbq")
+angle_min = 509.1
+angle_max = 509.1
+angle_curve = SubResource("Curve_aao3c")
+scale_amount_min = 0.5
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_558fu")
+color = Color(0.211765, 0, 1, 1)

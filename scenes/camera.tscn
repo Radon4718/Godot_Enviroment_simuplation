@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbrivpqrte5ay"]
+
+[ext_resource type="Script" path="res://scripts/camera.gd" id="1_qgpu7"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ktqds"]
+
+[node name="Camera" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_qgpu7")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(516, 364)
+zoom = Vector2(2, 2)
+limit_left = 0
+limit_top = 0
+limit_right = 1150
+limit_bottom = 720
+limit_smoothed = true
+position_smoothing_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(582, 343)
+shape = SubResource("CapsuleShape2D_ktqds")

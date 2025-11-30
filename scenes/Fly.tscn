@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://dd0wo5bm2c6n0"]
+
+[ext_resource type="Script" path="res://scripts/fly.gd" id="1_kc2lj"]
+[ext_resource type="Texture2D" uid="uid://bofjfofniyfuc" path="res://Assets/Giant Fly Sprite Sheet.png" id="1_ujjfn"]
+[ext_resource type="PackedScene" uid="uid://b70mofvecd8oj" path="res://scenes/bubble_system.tscn" id="2_ixgln"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8vu0"]
+atlas = ExtResource("1_ujjfn")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1otx"]
+atlas = ExtResource("1_ujjfn")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0g5u"]
+atlas = ExtResource("1_ujjfn")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kubbj"]
+atlas = ExtResource("1_ujjfn")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7koff"]
+animations = [{
+"frames": [{
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_r8vu0")
+}, {
+"duration": 1.4,
+"texture": SubResource("AtlasTexture_y1otx")
+}, {
+"duration": 1.4,
+"texture": SubResource("AtlasTexture_q0g5u")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_kubbj")
+}],
+"loop": true,
+"name": &"flying",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ugfkp"]
+radius = 80.0
+
+[node name="FlyBody" type="CharacterBody2D" groups=["Bug"]]
+collision_mask = 5
+script = ExtResource("1_kc2lj")
+
+[node name="HitBox" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-6, 3, -9, 2, -9, 1, -9, -1, -8, -1, -8, -2, -9, -4, -7, -6, -4, -6, -2, -5, -2, -5, -1, -6, 0, -6, 1, -7, 3, -9, 5, -8, 7, -7, 8, -6, 9, -5, 9, -3, 7, -2, 6, -1, 7, -1, 7, 3, 8, 4, 8, 7, 6, 6, 5, 6, 3, 7, 2, 8, 1, 9, -1, 6, -3, 6, -4, 8, -6, 7, -7, 7, -8, 5)
+
+[node name="Skin" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7koff")
+animation = &"flying"
+autoplay = "flying"
+frame_progress = 0.684149
+
+[node name="Bubble system" parent="." instance=ExtResource("2_ixgln")]
+position = Vector2(4, 3)
+
+[node name="Sight" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="Sight_shape" type="CollisionShape2D" parent="Sight"]
+shape = SubResource("CircleShape2D_ugfkp")
+
+[connection signal="body_entered" from="Sight" to="." method="_on_sight_body_entered"]
+[connection signal="body_exited" from="Sight" to="." method="_on_sight_body_exited"]
